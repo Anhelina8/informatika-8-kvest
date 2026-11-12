@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Місія: врятувати алгоритм | Інформатика 8 клас</title>
+<style>
+:root{--bg:#081225;--panel:#111f38;--panel2:#172944;--text:#edf4ff;--muted:#a9bad3;--cyan:#56e0e6;--violet:#a78bfa;--green:#5ee0a0;--red:#ff7b8b;--line:#2b4264}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 10%,#19345c 0,transparent 35%),radial-gradient(circle at 90% 80%,#242054 0,transparent 32%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{width:min(960px,92%);margin:0 auto;padding:28px 0 50px}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:28px}
+.logo{font-weight:800;letter-spacing:.08em;color:var(--cyan);font-size:.9rem}
+.tag{border:1px solid var(--line);border-radius:30px;padding:7px 12px;color:var(--muted);font-size:.8rem}
+.hero,.game,.result{background:linear-gradient(145deg,rgba(20,38,66,.97),rgba(13,26,47,.97));border:1px solid var(--line);border-radius:24px;box-shadow:0 18px 60px #0005}
+.hero{padding:clamp(24px,5vw,48px);text-align:center}
+.eyebrow{color:var(--cyan);font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:.75rem}
+h1{font-size:clamp(2rem,5vw,3.7rem);line-height:1.08;margin:14px 0}
+h1 span{color:var(--cyan)}
+p{color:var(--muted);line-height:1.65}
+.hero p{max-width:680px;margin:0 auto 24px}
+.btn{border:0;border-radius:13px;padding:13px 20px;font-weight:800;font-size:1rem;cursor:pointer;background:linear-gradient(100deg,var(--cyan),#8cf2d0);color:#071528;transition:.18s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn.secondary{background:#243957;color:var(--text);border:1px solid #456080}
+.game{padding:clamp(18px,4vw,34px);display:none}
+.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.level{color:var(--cyan);font-weight:800;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em}
+.score{background:#203653;padding:8px 13px;border-radius:30px;font-weight:700}
+.progress{height:8px;background:#263a57;border-radius:10px;overflow:hidden;margin:18px 0 28px}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .3s}
+h2{font-size:clamp(1.4rem,3vw,2rem);margin:8px 0}
+.task{background:#0c1a30;border:1px solid var(--line);border-radius:17px;padding:20px;margin:20px 0}
+.task p{margin:7px 0 0}
+.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.option{background:var(--panel2);color:var(--text);border:1px solid #385171;border-radius:13px;padding:15px;text-align:left;font-size:.98rem;cursor:pointer;min-height:62px}
+.option:hover{border-color:var(--cyan);background:#203b5c}
+.option.selected{border-color:var(--cyan);background:#174354;box-shadow:0 0 0 2px #56e0e633}
+.option.correct{border-color:var(--green);background:#123d37}
+.option.wrong{border-color:var(--red);background:#492a3a}
+.feedback{min-height:28px;font-weight:700;margin:12px 0}
+.feedback.good{color:var(--green)}.feedback.bad{color:var(--red)}
+.sequence{display:grid;gap:9px;margin:18px 0}
+.seqitem{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid #385171;border-radius:12px;padding:12px;cursor:pointer;text-align:left;color:var(--text);font-size:.96rem}
+.seqitem .num{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#294565;color:var(--cyan);font-weight:800;flex-shrink:0}
+.seqitem.picked{border-color:var(--violet);background:#302b58}
+.small{font-size:.85rem;color:var(--muted)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.result{display:none;text-align:center;padding:38px 24px}
+.medal{font-size:4rem}
+.final-score{font-size:3rem;color:var(--cyan);font-weight:900;margin:8px}
+.certificate{border:1px dashed #6380a7;border-radius:16px;padding:18px;margin:22px auto;max-width:520px}
+footer{text-align:center;color:#8296b5;font-size:.8rem;margin-top:22px}
+@media(max-width:620px){.options{grid-template-columns:1fr}header{align-items:flex-start;flex-direction:column}.hero{border-radius:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">◈ DIGITAL LAB / INFORMATИКА</div><div class="tag">8 клас · НУШ · Розділ 4</div></header>
+
+<section class="hero" id="intro">
+ <div class="eyebrow">Навчальна пригода</div>
+ <h1>МІСІЯ: <span>ВРЯТУВАТИ АЛГОРИТМ</span></h1>
+ <p>У цифровій лабораторії сталася помилка: система втратила план розв'язування задач. Пройди випробування, віднови послідовність етапів і введи лабораторію в робочий режим!</p>
+ <div class="task" style="text-align:left;max-width:650px;margin:22px auto">
+  <strong>Твоя місія:</strong>
+  <p>Виконати 5 рівнів, пригадати основні етапи розв'язування задач із використанням алгоритмів і програм та набрати якомога більше балів.</p>
+  <p class="small">За кожну правильну відповідь — 10 балів. Уважно читай умови!</p>
+ </div>
+ <button class="btn" onclick="startGame()">РОЗПОЧАТИ МІСІЮ →</button>
+</section>
+
+<main class="game" id="game">
+ <div class="topline"><div class="level" id="levelLabel">РІВЕНЬ 1 / 5</div><div class="score">★ <span id="score">0</span> балів</div></div>
+ <div class="progress"><div class="bar" id="bar"></div></div>
+ <div id="stage"></div>
+ <div class="feedback" id="feedback" aria-live="polite"></div>
+ <div class="actions"><button class="btn" id="checkBtn" onclick="checkAnswer()">ПЕРЕВІРИТИ</button><button class="btn secondary" id="nextBtn" onclick="nextStage()" style="display:none">ДАЛІ →</button></div>
+</main>
+
+<section class="result" id="result">
+ <div class="medal" id="medal">🏆</div>
+ <div class="eyebrow">Місію завершено</div>
+ <h2 id="resultTitle">Лабораторію врятовано!</h2>
+ <div class="final-score"><span id="finalScore">0</span>/50</div>
+ <p id="resultText"></p>
+ <div class="certificate"><div class="eyebrow">СЕРТИФІКАТ ДОСЯГНЕННЯ</div><h2 id="rank">Майстер алгоритмів</h2><p>За успішне проходження навчального квесту<br><strong>«Етапи розв'язування задач»</strong></p></div>
+ <button class="btn" onclick="restart()">ПРОЙТИ ЩЕ РАЗ ↻</button>
+</section>
+<footer>Інформатика · 8 клас · Навчальний квест за темою «Етапи розв'язування задач»</footer>
+</div>
+<script>
+const stages = [
+ {title:"Рівень 1. Розшифруй умову",desc:"Перш ніж розв'язувати задачу, потрібно зрозуміти її умову.",question:"Що потрібно зробити на етапі постановки задачі?",type:"choice",options:["Визначити, що дано, що потрібно знайти та які є обмеження","Одразу написати програмний код","Перевірити готову програму на помилки","Створити презентацію результатів"],answer:0,explain:"Правильно! Спочатку з'ясовують умову задачі: вхідні та вихідні дані, мету й обмеження."},
+ {title:"Рівень 2. Побудуй модель",desc:"Система просить визначити, як подати задачу для подальшого розв'язування.",question:"Учень обчислює площу прямокутника за довжиною a і шириною b. Яка математична модель відповідає задачі?",type:"choice",options:["S = a + b","S = 2 · (a + b)","S = a · b","S = a / b"],answer:2,explain:"Так! Площа прямокутника дорівнює добутку його довжини та ширини: S = a · b."},
+ {title:"Рівень 3. Віднови алгоритм",desc:"Етапи переплуталися. Натискай на картки в правильному порядку — від першої до останньої.",question:"Установи логічну послідовність основних етапів розв'язування задачі.",type:"sequence",items:["Постановка задачі","Побудова інформаційної/математичної моделі","Розробка алгоритму","Складання програми","Тестування та налагодження","Аналіз отриманих результатів"],order:[0,1,2,3,4,5],shuffle:[3,0,5,2,1,4],explain:"Чудово! Спочатку формулюємо задачу, будуємо модель, розробляємо алгоритм, програмуємо, тестуємо й аналізуємо результат."},
+ {title:"Рівень 4. Знайди помилку",desc:"Програміст поспішив і пропустив важливу дію.",question:"Програма обчислює середнє арифметичне двох чисел. Яку дію обов'язково потрібно виконати перед тим, як вважати результат правильним?",type:"choice",options:["Змінити колір вікна програми","Перевірити програму на тестових наборах даних","Видалити всі коментарі","Перейменувати файл"],answer:1,explain:"Саме так! Тестування допомагає виявити помилки та перевірити правильність роботи програми на різних даних."},
+ {title:"Рівень 5. Фінальний запуск",desc:"Останній захист цифрової лабораторії. Покажи, що розумієш призначення етапів.",question:"Після виконання програми отримано результат. Що передбачає етап аналізу результатів?",type:"choice",options:["Лише збереження файлу","Перевірку, чи відповідає результат умові задачі та поставленій меті","Повторне введення умови без змін","Видалення алгоритму"],answer:1,explain:"Вітаємо! Аналізують отримані результати, оцінюють їх відповідність умові та роблять висновки."}
+];
+let current=0,score=0,answered=false,sequence=[];
+function startGame(){document.getElementById("intro").style.display="none";document.getElementById("result").style.display="none";document.getElementById("game").style.display="block";current=0;score=0;selected=null;render()}
+function render(){
+ const s=stages[current];answered=false;sequence=[];
+ document.getElementById("levelLabel").textContent=`РІВЕНЬ ${current+1} / ${stages.length}`;
+ document.getElementById("score").textContent=score;
+ document.getElementById("bar").style.width=(current/stages.length*100)+"%";
+ document.getElementById("feedback").textContent="";
+ document.getElementById("feedback").className="feedback";
+ document.getElementById("checkBtn").style.display="inline-block";
+ document.getElementById("checkBtn").disabled=false;
+ document.getElementById("nextBtn").style.display="none";
+ let html=`<h2>${s.title}</h2><p>${s.desc}</p><div class="task"><strong>Завдання</strong><p>${s.question}</p></div>`;
+ if(s.type==="choice"){
+  html+='<div class="options">'+s.options.map((o,i)=>`<button class="option" data-index="${i}" onclick="choose(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join("")+'</div>';
+ }else{
+  html+='<p class="small">Натискай картки в потрібній послідовності. Обрані картки позначатимуться номерами.</p><div class="sequence">'+s.shuffle.map(i=>`<button class="seqitem" data-index="${i}" onclick="pickSequence(${i})"><span class="num">＋</span>${s.items[i]}</button>`).join("")+'</div><button class="btn secondary" onclick="resetSequence()">Скинути послідовність</button>';
+ }
+ document.getElementById("stage").innerHTML=html;
+}
+let selected=null;
+function choose(i){if(answered)return;selected=i;document.querySelectorAll(".option").forEach((b,n)=>b.classList.toggle("selected",n===i))}
+function pickSequence(i){if(answered||sequence.includes(i))return;sequence.push(i);const b=document.querySelector(`.seqitem[data-index="${i}"]`);b.classList.add("picked");b.querySelector(".num").textContent=sequence.length}
+function resetSequence(){if(answered)return;sequence=[];document.querySelectorAll(".seqitem").forEach(b=>{b.classList.remove("picked");b.querySelector(".num").textContent="＋"})}
+function checkAnswer(){
+ if(answered)return;
+ const s=stages[current];let ok=false;
+ if(s.type==="choice"){if(selected===null){say("Спочатку обери одну відповідь.","bad");return}ok=selected===s.answer;document.querySelectorAll(".option").forEach((b,i)=>{if(i===s.answer)b.classList.add("correct");else if(i===selected)b.classList.add("wrong")})}
+ else{if(sequence.length!==s.order.length){say("Обери всі картки, щоб скласти повну послідовність.","bad");return}ok=sequence.every((v,i)=>v===s.order[i]);document.querySelectorAll(".seqitem").forEach(b=>{b.disabled=true});}
+ answered=true;if(ok)score+=10;
+ document.getElementById("score").textContent=score;
+ say((ok?"✓ Правильно! ":"✕ Не зовсім. ")+s.explain,ok?"good":"bad");
+ document.getElementById("checkBtn").style.display="none";
+ document.getElementById("nextBtn").style.display="inline-block";
+ document.getElementById("nextBtn").textContent=current===stages.length-1?"ЗАВЕРШИТИ МІСІЮ":"НАСТУПНИЙ РІВЕНЬ →";
+}
+function say(t,c){const f=document.getElementById("feedback");f.textContent=t;f.className="feedback "+c}
+function nextStage(){if(current<stages.length-1){current++;selected=null;render()}else finish()}
+function finish(){
+ document.getElementById("game").style.display="none";document.getElementById("result").style.display="block";
+ document.getElementById("finalScore").textContent=score;
+ let rank,title,msg,medal;
+ if(score===50){rank="Експерт алгоритмів";title="Ідеально виконано!";msg="Ти бездоганно пройшов усі випробування. Цифрову лабораторію врятовано!";medal="🏆"}
+ else if(score>=30){rank="Майстер алгоритмів";title="Місію успішно виконано!";msg="Ти добре орієнтуєшся в етапах розв'язування задач. Ще трохи практики — і ти експерт!";medal="🥇"}
+ else{rank="Учень цифрової лабораторії";title="Перший крок зроблено!";msg="Переглянь матеріал параграфа та спробуй ще раз. Кожна спроба допомагає навчитися!";medal="🚀"}
+ document.getElementById("rank").textContent=rank;document.getElementById("resultTitle").textContent=title;document.getElementById("resultText").textContent=msg;document.getElementById("medal").textContent=medal;
+}
+function restart(){selected=null;document.getElementById("result").style.display="none";document.getElementById("intro").style.display="block"}
+</script>
+</body>
+</html>
